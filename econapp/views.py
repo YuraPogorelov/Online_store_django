@@ -15,17 +15,21 @@ def base_view(request):
 
 def product_view(request, product_slug):
     product = Product.objects.get(slug=product_slug)
+    categories = Category.objects.all()
     context = {
-        'product': product
+        'product': product,
+        'categories': categories
     }
     return render(request, 'product.html', context)
 
 
 def category_view(request, category_slug):
     category = Category.objects.get(slug=category_slug)
+    categories = Category.objects.all()
     products_of_category = Product.objects.filter(category=category)
     context = {
         'category': category,
-        'products_of_category': products_of_category
+        'products_of_category': products_of_category,
+        'categories': categories
     }
     return render(request, 'category.html', context)
