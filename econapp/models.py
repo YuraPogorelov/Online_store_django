@@ -61,3 +61,21 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+
+class CartItem(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    qty = models.PositiveIntegerField(default=1)
+    item_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return "Cart item for product {0}".format(self.product.title)
+    
+
+class Cart(models.Model):
+    items = models.ManyToManyField(CartItem, blank=True)
+    cart_total = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return str(self.id)
