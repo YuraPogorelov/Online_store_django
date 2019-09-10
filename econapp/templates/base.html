@@ -61,7 +61,7 @@
             <a class="nav-link" href="#">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'cart' %}">Корзина <span class='badge'>{{ cart.items.count }}</span></a>
+            <a class="nav-link" href="{% url 'cart' %}">Корзина <span class='badge' id='cart_count'>{{ cart.items.count }}</span></a>
           </li>
         </ul>
       </div>
@@ -153,7 +153,6 @@
   <!-- Bootstrap core JavaScript -->
   <script src='{% static "js/jquery.js" %}'></script>
   <script src='{% static "js/bootstrap.js" %}'></script>
-
 </body>
 
 </html>
