@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Brand, Product, CartItem, Cart
+from .models import Category, Brand, Product, CartItem, Cart, Order
 
 # Register your models here.
 @admin.register(Category)
@@ -20,4 +20,8 @@ class CartItemAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
     pass
