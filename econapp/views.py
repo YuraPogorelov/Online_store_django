@@ -223,6 +223,4 @@ def make_order_view(request):
         request.session['total'] = cart.items.count()
         del request.session['cart_id']
         del request.session['total']
-        #return HttpResponseRedirect(reverse('make_order_view'))
         return HttpResponseRedirect(reverse('thank_you'))
-        #return render(request, 'thank_you.html')

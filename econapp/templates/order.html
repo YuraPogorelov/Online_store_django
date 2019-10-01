@@ -4,8 +4,8 @@
 
 
 {% block content %}
-    <form action="{% url 'thank_you' %}" method="POST">
-    {% csrf_token %}
+    <form action='{% url "make_order" %}' method="POST">
+{% csrf_token %}
         <div class='row'>
             <div class='col-sm-4'>
             {{ form.name|as_crispy_field}}
