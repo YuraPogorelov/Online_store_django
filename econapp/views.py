@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from .forms import *
-from .models import Category, Product, CartItem, Cart
+from .models import *
 from decimal import Decimal
+
 
 # Create your views here.
 
@@ -182,6 +183,46 @@ def order_create_view(request):
         cart = Cart.objects.get(id=cart_id)
     form = OrderForm(request.POST or None)
     context = {
-        'form': form
+        'form': form,
+        'cart': cart
     }
     return render(request, 'order.html', context)
+
+
+def make_order_view(request):
+    try:
+        cart_id = request.session['cart_id']
+        cart = Cart.objects.get(id=cart_id)
+        request.session['total']=cart.items.count()
+    except:
+        cart = Cart()
+        cart.save()
+        cart_id = cart.id
+        request.session['cart_id'] = cart_id
+        cart = Cart.objects.get(id=cart_id)
+    form = OrderForm(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        last_name = form.cleaned_data['last_name']
+        phone = form.cleaned_data['phone']
+        buying_type = form.cleaned_data['buying_type']
+        address = form.cleaned_data['address']
+        comments = form.cleaned_data['comments']
+        new_order = Order()
+        new_order.user = request.user
+        new_order.save()
+        new_order.items.add(cart)
+        new_order.first_name = name
+        new_order.last_name = last_name
+        new_order.phone = phone
+        new_order.address = address
+        new_order.buying_type = buying_type
+        new_order.comments = comments
+        new_order.total = cart.cart_total
+        new_order.save()
+        request.session['total'] = cart.items.count()
+        del request.session['cart_id']
+        del request.session['total']
+        #return HttpResponseRedirect(reverse('make_order_view'))
+        return HttpResponseRedirect(reverse('thank_you'))
+        #return render(request, 'thank_you.html')

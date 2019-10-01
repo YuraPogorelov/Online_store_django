@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from .views import *
 
 urlpatterns = [
@@ -10,5 +11,7 @@ urlpatterns = [
     path('cart/', cart_view, name='cart'),
     path('checkout/', checkout_view, name='checkout'),
     path('order/', order_create_view, name='create_order'),
+    path('thank_you/', TemplateView.as_view(template_name='thank_you.html'), name='thank_you'),
+    #path('thank_you/', TemplateView.as_view(template_name="thank_you.html"), name='make_order_view'),
     path('', base_view, name='base')
 ]
